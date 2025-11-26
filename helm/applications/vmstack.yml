@@ -9,9 +9,9 @@ spec:
     repoURL: https://github.com/alakaganaguathoork/uni-test-task.git
     targetRevision: main
     chart: helm/charts/vmstack
-    helm:
-      valueFiles:
-        - values.yaml
+    # helm:
+      # valueFiles:
+        # - values.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: monitoring

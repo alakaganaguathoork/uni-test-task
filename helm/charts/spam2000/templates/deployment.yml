@@ -22,24 +22,24 @@ spec:
           image: {{ include "app.image" . }}
           imagePullPolicy: Always
           ports:
-            - containerPort: 5400
-          readinessProbe:
-            httpGet:
-              path: /health
-              port: 5400
-            initialDelaySeconds: 5
-            periodSeconds: 10
-          livenessProbe:
-            httpGet:
-              path: /health
-              port: 5400
-            initialDelaySeconds: 15
-            periodSeconds: 20
-          resources:
-            requests:
-              cpu: "100m"
-              memory: "128Mi"
-            limits:
-              cpu: "500m"
-              memory: "512Mi"
+            - containerPort: 80
+        #   readinessProbe:
+            # httpGet:
+            #   path: /health
+            #   port: 5400
+            # initialDelaySeconds: 5
+            # periodSeconds: 10
+        #   livenessProbe:
+            # httpGet:
+            #   path: /health
+            #   port: 5400
+            # initialDelaySeconds: 15
+            # periodSeconds: 20
+        #   resources:
+            # requests:
+            #   cpu: "100m"
+            #   memory: "128Mi"
+            # limits:
+            #   cpu: "500m"
+            #   memory: "512Mi"
       restartPolicy: Always
