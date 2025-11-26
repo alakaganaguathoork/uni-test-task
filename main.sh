@@ -71,7 +71,7 @@ case "$ACTION" in
         install_required_pkgs "${REQ_PKGS[*]}" "$OS"
         install_tools "${TOOLS[*]}" "$OS" "$ARCH" "$K8S_VER"
         start_cluster $PROFILE
-        install_service_via_helm "argocd" "argocd" "argo" "argo/argo-cd" "https://argoproj.github.io/argo-helm" "$DIR/yamls/argocd.yml"
+        install_service_via_helm "argocd" "argocd" "argo" "argo/argo-cd" "https://argoproj.github.io/argo-helm" "$DIR/values-files/argocd.yml"
 
         color "OS: $OS"
         color "ARCH: $ARCH"
@@ -82,6 +82,7 @@ case "$ACTION" in
         get_argocd_password
 
         kubectl apply -f helm/applications/spam.yml
+        kubectl apply -f helm/applications/vmstack.yml
         ;;
     destroy)
         delete_cluster $PROFILE

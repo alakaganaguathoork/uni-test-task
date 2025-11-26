@@ -1,0 +1,11 @@
+apiVersion: v2
+name: vmstack
+description: "Local wrapper chart for victoria-metrics-k8s-stack"
+type: application
+version: 0.1.0
+
+dependencies:
+  - name: victoria-metrics-k8s-stack
+    version: 0.63.6
+    repository: https://victoriametrics.github.io/helm-charts/
+    alias: vmstack

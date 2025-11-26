@@ -1,0 +1,14 @@
+vmsingle:
+  spec:
+    storage:
+      resources:
+        requests:
+          storage: 2Gi
+          
+  ingress:
+    enabled: true
+    annotations:
+      - kubernetes.io/ingress.class: nginx
+    ingressClassName: nginx
+    hosts:
+      - vm.mishap.local
