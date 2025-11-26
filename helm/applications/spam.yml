@@ -13,7 +13,7 @@ spec:
       valueFiles:
         - values.yaml
   destination:
-    server: https://kubernetes.default.svc
+    server: https://kubernetes.minikube-mine.svc
     namespace: app
   syncPolicy:
     automated:
