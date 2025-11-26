@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/alakaganaguathoork/uni-test-task.git
     targetRevision: main
-    chart: helm/charts/vmstack
+    path: helm/charts/vmstack
     # helm:
       # valueFiles:
         # - values.yaml
