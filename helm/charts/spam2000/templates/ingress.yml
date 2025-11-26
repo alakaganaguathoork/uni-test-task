@@ -10,7 +10,7 @@ spec:
   ingressClassName: {{ include "app.ingress.ingressClassName" . | trim }}
   hostname: 
   rules:
-    host: {{ .Values.ingress.spec.rules.host}}
+    - host: {{ .Values.ingress.spec.rules.host}}
       http:
         paths:
         - path: /
