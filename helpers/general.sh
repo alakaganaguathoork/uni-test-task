@@ -21,7 +21,9 @@ error() {
 }
 
 help() {
-    local help_string=$(cat <<EOF
+    local help_string=""
+
+    help_string=$(cat <<EOF
 This script automates < > based on provided argument/s --.
 Usage: main.sh --action <install|destroy>
 EOF
