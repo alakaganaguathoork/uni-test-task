@@ -4,36 +4,59 @@ set -euo pipefail
 IFS=$'\n\t'
 
 ###
-# This is a helper script to be sourced in the ../main.sh
+# This is a helper script to install all required packages & tools, and to be sourced in the ../main.sh
 ###
 
 
 ###
-# MAIN
+# PACKAGES
 ###
-install_via_pkg_manager() {
+install_required_pkgs() {
+    local pkgs=$1 
+    local os="$2"
+
+    for package in $pkgs; do
+        install_pkg $os $package
+    done
+}
+
+uninstall_required_pkgs() {
+    local pkgs=$1 
+    local os="$2"
+
+    for package in $pkgs; do
+        uninstall_pkg $os $package
+    done
+}
+
+install_pkg() {
     local os="$1"
-    local tool="$2"
+    local pkg="$2"
     local repo="${3-}"
 
     case $os in
         linux)
-            if ! dpkg $tool > /dev/null 2>&1; then
-                color "Installing missing packages $tool with apt..."
+            if ! dpkg -l $pkg > /dev/null 2>&1; then
+                color "Installing a required missing package $pkg with apt..."
                 if [[ -n $repo ]]; then 
                     sudo add-apt-repository $repo
+                    sudo apt update
                 fi
-                # sudo apt update
-                sudo apt install $tool -y 
+                
+                sudo apt install $pkg -y 
+            else
+                color "Package $pkg already installed, skipping..."
             fi
             ;;
         darwin)
             if ! command -v brew >/dev/null 2>&1; then
                 error "Homebrew is not installed. Install it from https://brew.sh first."
                 return 1
-            elif ! brew list | grep $tool > /dev/null 2>&1; then
-                color "Installing misshing package $tool with brew..." 
-                brew install $tool
+            elif ! brew list | grep $pkg > /dev/null 2>&1; then
+                color "Installing misshing package $pkg with brew..." 
+                brew install $pkg
+            else
+                color "Package $pkg already installed, skipping..."
             fi
             ;;
         *)
@@ -42,22 +65,29 @@ install_via_pkg_manager() {
     esac
 }
 
-uninstall_via_pkg_manager() {
+uninstall_pkg() {
     local os="$1"
-    local tool="$2"
+    local pkg="$2"
     local repo="${3:-}"
 
     case $os in
         linux)
-            color "Installing package $tool with apt..."
-            sudo apt purge $tool -y
-            if [[ -n $repo ]]; then
-                sudo add-apt-repository --remove $repo
+            if ! dpkg -l $pkg > /dev/null 2>&1; then
+                color "There is no package $pkg, skipping..."
+            else
+                color "Unnstalling package $pkg with apt..."
+                sudo apt purge $pkg -y
+                if [[ -n $repo ]]; then
+                    sudo add-apt-repository --remove $repo
+                fi
             fi
             ;;
         darwin)
-            if brew list | grep $tool > /dev/null 2>&1; then
-                brew uninstall $tool
+            if ! brew list | grep $pkg > /dev/null 2>&1; then
+                color "There is no package $pkg, skipping..."
+            else
+                color "Unnstalling package $pkg with brew..."
+                brew uninstall $pkg
             fi
             ;;
         *)
@@ -65,36 +95,36 @@ uninstall_via_pkg_manager() {
     esac
 }
 
-install_required_packages() {
-    local pkgs=$1
+install_tools() {
+    local tools=$1
     local os=$2
     local arch=$3
     local k8s_ver=${4:-}
 
-    for package in $pkgs; do
-        color "Checking $package..."
-        if ! command -v "$package" > /dev/null 2>&1; then
-            color "Installing $package..."
-            install_"$package" $os $arch $k8s_ver
+    for tool in $tools; do
+        color "Checking $tool..."
+        if ! command -v "$tool" > /dev/null 2>&1; then
+            color "Installing $tool..."
+            install_"$tool" $os $arch $k8s_ver
         else
-            color "$package is already installed."
+            color "$tool is already installed."
         fi
     done
 
-    color "All required packages were installed."
+    color "All required tools were installed."
 }
 
-uninstall_required_packages() {
-    local pkgs=$1
+uninstall_tools() {
+    local tools=$1
     local os=${2:-}
 
-    for package in $pkgs; do
-        color "Checking $package..."
-        if command -v "$package" > /dev/null 2>&1; then
-            color "Uninstalling $package..."
-            uninstall_"$package" $os
+    for tool in $tools; do
+        color "Checking $tool..."
+        if command -v "$tool" > /dev/null 2>&1; then
+            color "Uninstalling $tool..."
+            uninstall_"$tool" $os
         else
-            color "$package is not installed."
+            color "$tool is not installed."
         fi
     done
 
@@ -103,32 +133,8 @@ uninstall_required_packages() {
 }
 
 ###
-# INSTALLS
+# TOOLS
 ###
-install_curl() {
-    local os=$1
-
-    install_via_pkg_manager "$os" curl
-}
-
-uninstall_curl() {
-    local os=$1
-
-    uninstall_via_pkg_manager "$os" curl
-}
-
-install_wget() {
-    local os=$1
-
-    install_via_pkg_manager "$os" wget
-}
-
-uninstall_wget() {
-    local os=$1
-
-    uninstall_via_pkg_manager "$os" wget
-}
-
 install_minikube() {
     local os=$1
     local arch=$2
@@ -139,7 +145,7 @@ install_minikube() {
 }
 
 uninstall_minikube() {
-    sudo rm "$(which minikube)"
+    sudo rm "$(command -v minikube)"
     rm -rf ~/.minikube
     color "minikube was uninstalled from the system."
 }
@@ -156,7 +162,7 @@ install_kubectl() {
 }
 
 uninstall_kubectl() {
-    sudo rm "$(which kubectl)"
+    sudo rm "$(command -v kubectl)"
     # rm -rf ~/.kube
     color "kubectl was uninstalled from the system."
 }
@@ -169,46 +175,13 @@ install_helm() {
 }
 
 uninstall_helm() {
-    sudo rm -rf "$(which helm)"
+    sudo rm -rf "$(command -v helm)"
     rm -rf ~/.helm
     rm -rf ~/.cache/helm
     rm -rf ~/.config/helm
     rm -rf ~/.local/share/helm
 }
 
-install_yq() {
-    local os=$1
-    local arch=$2
-
-    case $os in
-        linux)
-            wget "https://github.com/mikefarah/yq/releases/download/lates/yq_$arch" -O yq 
-            chmod +x yq && mv yq /usr/local/bin/yq
-            ;;
-        darwin)
-            brew install yq
-            ;;
-        *)
-            error "Unsupported OS: $os."
-            ;;
-    esac
-}
-
-uninstall_yq() {
-    local $os="$1"
-
-    case $os in
-        linux)
-            sudo rm -rf "$(which yq)"
-            ;;
-        darwin)
-            brew uninstall yq
-            ;;
-        *)
-            error "Unsupported OS: $os."
-            ;;
-    esac
-}
 
 ###
 # CLUSTER HELPERS

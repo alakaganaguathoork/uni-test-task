@@ -1,0 +1,20 @@
+image:
+  repository: andriiuni 
+  name: spam2000
+  tag: 1.1394.355
+
+app:
+  name: spam2000
+  namespace: app 
+
+service:
+  type: ClusterIP
+  internalLB: false
+  ports:
+    port: 80
+    targetPort: 80
+
+ingress:
+  spec:
+    rules:
+      host: spam200.mishap.local

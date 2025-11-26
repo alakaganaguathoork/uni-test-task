@@ -43,108 +43,62 @@ parse_args() {
 }
 
 ###
+# Functions
+###
+source "$DIR/helpers/functions.sh"
+
+
+###
 # DEFAULTS
 ###
 ACTION=""
 OS=$(get_os)
 ARCH=$(get_arch)
-REQ_PKGS=($(yq '.tools.[]' describe.yml))
-# APT_PKGS=($(yq '.tools.apt[] | keys | .[]' describe.yml))
+REQ_PKGS=(wget curl)
+TOOLS=(minikube kubectl helm)
 K8S_VER="1.34.0"
 PROFILE="minikube-mine"
-NAMESPACE="default"
-
-###
-# Functions
-###
-start_cluster() {
-    local profile=${1:="minikube-test"}
-    local driver=${2:-"kvm2"}
-    local c_runtime=${3:-"docker"}
-    local k8s_ver=${4:-"$K8S_VER"}
-
-    if ! is_cluster_existing; then
-        minikube start \
-            --profile="$profile" \
-            --driver="$driver" \
-            --container-runtime="$c_runtime" \
-            --kubernetes-version="v$k8s_ver" 
-            # --network=$NETWORK_NAME \
-            # --nodes=3 \
-            # --addons=$MK_ADDONS_LIST \
-        
-        color "Cluster $profile was started."
-    else
-        color "Cluster $profile already has been started."
-    fi
-}
-
-delete_cluster() {
-    local profile=${1:-"minikube-test"}
-
-    if ! minikube status --profile $profile > /dev/null 2>&1; then
-        error "Cluster $profile doesn't exist"
-    fi
-
-    minikube delete --profile="$profile"
-    color "Cluster $profile was deleted."
-}
-
-helm_install_release() {
-    local namespace=$1
-    local release=$2
-    local repo=$3
-    local url=${4:-}
-    local values=$5
-
-    if ! helm repo list | grep "$repo"; then
-        color "There is no $repo locally, adding from $url..."
-        helm repo add "$repo" "$url"
-        hel repo update
-    fi
-
-    if is_release_installed "$namespace" "$release"; then
-        color "$release release in $namespace namespace is already installed, skipping..."
-        exit 0
-    fi
-
-    helm upgrade \
-        -n $namespace \
-        --create-namespace \
-        --install "$release" "$repo" \
-        --reuse-values \
-        --values "$values"
-}
-
-helm_uninstall_release() {
-    local namespace=$1
-    local release=$2
-    helm uninstall -n "$namespace" "$release" || true
-}
+MK_ADDONS_LIST="ingress,volumesnapshots"
 
 
 ###
 # MAIN LOGIC
 ###
 parse_args "$@"
-echo "${REQ_PKGS[@]}"
 
 case "$ACTION" in
     install)
+        install_required_pkgs "${REQ_PKGS[*]}" "$OS"
+        install_tools "${TOOLS[*]}" "$OS" "$ARCH" "$K8S_VER"
+        start_cluster $PROFILE
+        install_service_via_helm "argocd" "argocd" "argo" "argo/argo-cd" "https://argoproj.github.io/argo-helm" "$DIR/yamls/argocd.yml"
+
         color "OS: $OS"
         color "ARCH: $ARCH"
         color "Kubernetes version: $K8S_VER"
+        color "Required packages installed: ${REQ_PKGS[*]}"
+        color "Tools installed: ${TOOLS[*]}"
+        # get_cluster_ip $PROFILE
+        get_argocd_password
 
-        install_required_packages "${REQ_PKGS[*]}" "$OS" "$ARCH" "$K8S_VER"
-        start_cluster $PROFILE
-        # helm_install_release $NAMESPACE argocd
+        kubectl apply -f helm/applications/spam.yml
         ;;
     destroy)
         delete_cluster $PROFILE
-        uninstall_required_packages "${REQ_PKGS[*]}" "$OS"
+        uninstall_tools "${TOOLS[*]}" "$OS"
+        # uninstall_required_pkgs "${REQ_PKGS[*]}" "$OS"
 
+        color "OS: $OS"
+        color "ARCH: $ARCH"
+        color "Kubernetes version: $K8S_VER"
+        color "These packages were NOT purged (to not break your system): ${REQ_PKGS[*]}"
+        color "Tools deleted: ${TOOLS[*]}"
+        # color "Services deleted: $SERVICES"
         ;;
     *)
         error "Unknown action: $ACTION"
         ;;
 esac
+
+        get_cluster_ip $PROFILE
+        get_argocd_password
