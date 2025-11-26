@@ -8,6 +8,7 @@ metadata:
     {{- include "app.ingress.annotations" . | nindent 4 }}  
 spec:
   ingressClassName: {{ include "app.ingress.ingressClassName" . | trim }}
+  hostname: {{ .Values.ingress.spec.host}}
   rules:
   - http:
       paths:

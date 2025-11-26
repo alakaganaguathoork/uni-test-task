@@ -16,5 +16,4 @@ service:
 
 ingress:
   spec:
-    rules:
-      host: spam200.mishap.local
+    host: spam200.mishap.local
