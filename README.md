@@ -4,7 +4,7 @@ This is a test task project for Spam2000 app infrastucture setup. It aim is to t
 
 The `main.sh` will install/clean up few required packages (based on OS: Linux and MacOS.
 
->MacOS - potentially: I didn't have a change to test, but required package/s installation has conditional logic for `os` and `arch` in [./scripts/general.sh](./scripts/general.sh)), tools and run services as ArgoCD applications
+>MacOS - potentially: I didn't have a chance to test, but required package/s installation has conditional logic for `os` and `arch` in [./scripts/general.sh](./scripts/general.sh)), tools and run services as ArgoCD applications
 
 ## Condiderations
 
@@ -16,7 +16,7 @@ The `main.sh` will install/clean up few required packages (based on OS: Linux an
 
 :warning: **Warning**: `~/.kube/config` file won't be deleted on cluster deletion to not mess up your existing config (it's commented at [./scripts/resolve_tools.sh:166](./scripts/resolve_tools.sh#L166))
 
-:warning: **Warning**: Installed tools won't be deleted on cluster deletion in order to not mess up your env (it's commented in [main.sh:104](./main.sh#L104))
+:warning: **Warning**: Installed tools won't be deleted on cluster deletion in order to not mess up your env (it's commented in [main.sh:95](./main.sh#L95))
 
 ## Prerequisites
 
