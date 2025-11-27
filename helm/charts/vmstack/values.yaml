@@ -122,16 +122,16 @@ prometheus-node-exporter:
 grafana:
   adminPassword: grafana
 
-  plugins:
-    - victoriametrics-metrics-datasource
+  # plugins:
+    # - victoriametrics-metrics-datasource
 
   datasources:
     datasources.yaml:
       apiVersion: 1
       datasources:
         - name: victoriametrics
-          type: prometheus # victoriametrics-metrics-datasource
-          url: http://vmstack-victoria-metrics-single-server:8428/prometheus
+          type: prometheus
+          url: http://vmstack-victoria-metrics-single-server.monitoring.svc:8428/prometheus
           access: proxy
           isDefault: true
           editable: true
