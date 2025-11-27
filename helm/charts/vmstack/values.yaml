@@ -88,14 +88,14 @@ victoria-metrics-single:
     # limits:
       # cpu: 200m
       # memory: 512Mi
-  server:       
-    ingress:
-      enabled: true
-      annotations:
-        kubernetes.io/ingress.class: nginx
-      ingressClassName: nginx
-      hosts:
-        - vm.mishap.local
+  # server:       
+    # ingress:
+      # enabled: true
+      # annotations:
+        # kubernetes.io/ingress.class: nginx
+      # ingressClassName: nginx
+      # hosts:
+        # - vm.mishap.local
 
 victoria-metrics-agent:
   remoteWrite:
