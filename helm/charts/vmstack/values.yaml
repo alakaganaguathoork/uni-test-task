@@ -163,9 +163,6 @@ grafana:
       node-exporter:
         gnetId: 1860
         datasource: prometheus
-      kubernetes:
-        gnetId: 15661
-        datasource: prometheus
       victoria-metrics-single-anotether:
         gnetId: 10229
         datasource: prometheus
