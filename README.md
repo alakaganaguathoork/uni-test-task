@@ -2,7 +2,7 @@
 
 This is a test task project for Spam2000 app infrastucture setup. It aim is to test skills of a newcommer in DevOps field.
 
-The `main.sh` will install few required packages (based on OS: Linux/MacOS), tools and run services as ArgoCD applications.
+The `main.sh` will install few required packages (based on OS: Linux/potentially, MacOS - I didn't have a device available to test), tools and run services as ArgoCD applications.
 
 <span style="color: red; font-size: 22px; font-weight: 800;">! </span> Warning: This scripts uses `sudo`:
 
@@ -48,3 +48,5 @@ Apps to be installed and synced in ArgoCD:
     ```
 
 2. VictoriaMetrics doesn't have ingress as all metrics are pulled by Grafana from inside the cluster.
+
+ja4nRJyqMcYlFJ7j

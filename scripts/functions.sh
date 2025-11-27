@@ -29,7 +29,7 @@ is_release_installed() {
 edit_hosts_file() {
     local action=$1
     local minikube_ip="$2"
-    local record="$minikube_ip  argocd.mishap.local grafana.mishap.local spam200.mishap.local vm.mishap.local"
+    local record="$minikube_ip  argocd.mishap.local grafana.mishap.local spam2000.mishap.local vm.mishap.local"
 
     case $action in
         add)
