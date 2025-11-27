@@ -163,16 +163,14 @@ grafana:
           editable: true
           options:
             path: /var/lib/grafana/dashboards/default
+            foldersFromFilesStructure: true
+
   
   dashboards:
     default:
-      # spam2000:
-        # file: dashboards/spam2000.json
-        # datasource: victoriametrics
-      spam2000-curl:
-        url: https://github.com/alakaganaguathoork/uni-test-task/blob/main/helm/charts/vmstack/dashboards/spam2000.json
-        curlOptions: "-sLf"
-        token: ''
+      spam2000:
+        file: dashboards/spam2000.json
+        datasource: victoriametrics
       victoria-metrics-single:
         gnetId: 22084
         datasource: victoriametrics
@@ -182,7 +180,7 @@ grafana:
       resource-efficiency:
         gnetId: 24131
         datasource: victoriametrics
-      spam2000:
+      spam2000-from-json:
         json: |
           {
             "annotations": {
