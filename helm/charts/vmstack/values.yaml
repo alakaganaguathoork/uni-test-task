@@ -148,7 +148,7 @@ grafana:
     default:
       victoria-metrics-single:
         gnetId: 22084
-        datasource: victoriametric
+        datasource: victoriametrics
       node-exporter:
         gnetId: 1860
         datasource: victoriametrics
