@@ -1,14 +1,16 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: victoria-metrics
+  name: vm-stack
   namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
   source:
     repoURL: https://github.com/alakaganaguathoork/uni-test-task.git
-    targetRevision: main
     path: helm/charts/vmstack
+    targetRevision: HEAD
     # helm:
       # valueFiles:
         # - values.yaml

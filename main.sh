@@ -73,33 +73,35 @@ case "$ACTION" in
         start_cluster $PROFILE
         install_service_via_helm "argocd" "argocd" "argo" "argo/argo-cd" "https://argoproj.github.io/argo-helm" "$DIR/values-files/argocd.yml"
 
-        color "OS: $OS"
-        color "ARCH: $ARCH"
-        color "Kubernetes version: $K8S_VER"
-        color "Required packages installed: ${REQ_PKGS[*]}"
-        color "Tools installed: ${TOOLS[*]}"
-        # get_cluster_ip $PROFILE
-        get_argocd_password
+        # Apps
+        create_argocd_app spam
 
-        kubectl apply -f helm/applications/spam.yml
-        kubectl apply -f helm/applications/vmstack.yml
+        # Debug
+        {
+            color "OS: $OS"
+            color "ARCH: $ARCH"
+            color "Kubernetes version: $K8S_VER"
+            color "Required packages installed:\n${REQ_PKGS[*]}"
+            color "Tools installed:\n${TOOLS[*]}"
+            sleep 5
+            get_argocd_password
+        }
         ;;
     destroy)
         delete_cluster $PROFILE
         uninstall_tools "${TOOLS[*]}" "$OS"
-        # uninstall_required_pkgs "${REQ_PKGS[*]}" "$OS"
+        uninstall_required_pkgs "${REQ_PKGS[*]}" "$OS"
 
-        color "OS: $OS"
-        color "ARCH: $ARCH"
-        color "Kubernetes version: $K8S_VER"
-        color "These packages were NOT purged (to not break your system): ${REQ_PKGS[*]}"
-        color "Tools deleted: ${TOOLS[*]}"
-        # color "Services deleted: $SERVICES"
+        # Debug
+        {
+            color "These packages were NOT purged (to not break your system):\n${REQ_PKGS[*]}"
+            color "Tools deleted:\n${TOOLS[*]}"
+        }
         ;;
     *)
         error "Unknown action: $ACTION"
         ;;
 esac
 
-        get_cluster_ip $PROFILE
-        get_argocd_password
+        # get_cluster_ip $PROFILE
+        # get_argocd_password

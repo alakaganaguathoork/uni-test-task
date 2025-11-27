@@ -9,7 +9,6 @@ app:
 
 service:
   type: ClusterIP
-  internalLB: false
   ports:
     port: 80
     targetPort: 3000

@@ -36,7 +36,7 @@ install_pkg() {
 
     case $os in
         linux)
-            if ! dpkg -l $pkg > /dev/null 2>&1; then
+            if ! dpkg -s $pkg > /dev/null 2>&1; then
                 color "Installing a required missing package $pkg with apt..."
                 if [[ -n $repo ]]; then 
                     sudo add-apt-repository $repo
@@ -72,7 +72,7 @@ uninstall_pkg() {
 
     case $os in
         linux)
-            if ! dpkg -l $pkg > /dev/null 2>&1; then
+            if ! dpkg -s $pkg > /dev/null 2>&1; then
                 color "There is no package $pkg, skipping..."
             else
                 color "Unnstalling package $pkg with apt..."
@@ -180,18 +180,4 @@ uninstall_helm() {
     rm -rf ~/.cache/helm
     rm -rf ~/.config/helm
     rm -rf ~/.local/share/helm
-}
-
-
-###
-# CLUSTER HELPERS
-###
-is_cluster_existing() {
-    kubectl cluster-info >/dev/null 2>&1
-}
-
-is_release_installed() {
-    local namespace=$1
-    local release=$2
-    helm status -n "$namespace" "$release" >/dev/null 2>&1
 }

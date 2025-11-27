@@ -1,11 +1,26 @@
 apiVersion: v2
-name: vmstack
-description: "Local wrapper chart for victoria-metrics-k8s-stack"
+name: vm-observability
+description: "App of apps chart for VictoriaMetrics + Grafana + exporters (prometheus-node-exporter, kube-state-metrics)"
 type: application
 version: 0.1.0
 
 dependencies:
-  - name: victoria-metrics-k8s-stack
-    version: 0.63.6
+  - name: victoria-metrics-single
+    version: 0.13.0
     repository: https://victoriametrics.github.io/helm-charts/
-    alias: vmstack
+
+  - name: victoria-metrics-agent
+    version: 0.12.0
+    repository: https://victoriametrics.github.io/helm-charts/
+
+  - name: kube-state-metrics
+    version: 5.24.0
+    repository: https://prometheus-community.github.io/helm-charts
+
+  - name: prometheus-node-exporter
+    version: 4.31.0
+    repository: https://prometheus-community.github.io/helm-charts
+
+  - name: grafana
+    version: 8.5.16
+    repository: https://grafana.github.io/helm-charts

@@ -9,13 +9,71 @@ IFS=$'\n\t'
 
 
 ###
+# CLUSTER HELPERS
+###
+is_cluster_existing() {
+    kubectl cluster-info >/dev/null 2>&1
+}
+
+is_release_installed() {
+    local namespace=$1
+    local release=$2
+    helm status -n "$namespace" "$release" >/dev/null 2>&1
+}
+
+
+###
 # MINIKUBE
 ###
+edit_hosts_file() {
+    local action=$1
+    local minikube_ip="$2"
+
+    case $action in
+        add)
+            color "Adding cluster hosts to the /etc/hosts file"
+            sudo tee -a /etc/hosts <<EOF
+$minikube_ip  argocd.mishap.local grafana.mishap.local spam200.mishap.local vm.mishap.local
+EOF
+            ;;
+        remove)
+            color "Removing cluster hosts from /etc/hosts file"
+            sudo sed -i "/$minikube_ip/d" /etc/hosts            ;;
+        *)
+            error "No action was provided for edit_hosts_file()"
+            ;;
+    esac
+}
+
+get_cluster_ip() {
+    local profile=$1
+    if ! is_cluster_existing; then
+        color "Cluster doesn't exist yet, so cluster IP can't be retrieved."
+        # exit 0
+    fi
+
+    echo "$(minikube ip -p $profile)"
+}
+
+get_argocd_password() {
+    local com=""
+
+    while [[ -z "$com" ]]; do
+        color "Waiting for ArgoCD password..."
+        com="$(kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath='{.data.password}' 2>/dev/null | base64 -d || true)"
+        sleep 1
+    done
+
+    color "ArgoCD initial password: ${com}"
+}
+
 start_cluster() {
     local profile=${1:="minikube-test"}
     local driver=${2:-"kvm2"}
     local c_runtime=${3:-"docker"}
     local k8s_ver=${4:-"$K8S_VER"}
+    local addons=${5:-"$MK_ADDONS_LIST"}
+    local cluster_ip=""
 
     if ! is_cluster_existing; then
         minikube start \
@@ -23,7 +81,7 @@ start_cluster() {
             --driver="$driver" \
             --container-runtime="$c_runtime" \
             --kubernetes-version="v$k8s_ver" \
-            --addons=$MK_ADDONS_LIST
+            --addons="$addons"
             # --network=$NETWORK_NAME \
             # --nodes=3 \
         
@@ -32,33 +90,23 @@ start_cluster() {
         color "Cluster $profile already has been started."
     fi
 
-    get_cluster_ip $profile
+    cluster_ip=$(get_cluster_ip $profile)
+    edit_hosts_file add "$cluster_ip"
 }
 
 delete_cluster() {
     local profile=${1:-"minikube-test"}
+    local cluster_ip=""
 
     if ! minikube status --profile $profile > /dev/null 2>&1; then
         error "Cluster $profile doesn't exist"
     fi
 
+    cluster_ip=$(get_cluster_ip $profile)
+    edit_hosts_file remove "$cluster_ip"
     minikube delete --profile="$profile"
+
     color "Cluster $profile was deleted."
-}
-
-get_cluster_ip() {
-    local profile=$1
-    if ! is_cluster_existing; then
-        color "Cluster doesn't exist yet."
-        exit 0
-    fi
-
-    color "Cluster IP: $(minikube ip -p $profile)"
-}
-
-get_argocd_password() {
-    local com="$(kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d)"
-    color "ArgoCD initial password: ${com}"
 }
 
 
@@ -96,4 +144,16 @@ uninstall_service_via_helm() {
     local namespace=$1
     local release=$2
     helm uninstall -n "$namespace" "$release" || true
+}
+
+create_argocd_app() {
+    name=$1
+    app_folder="$DIR/helm/applications"
+    path="${app_folder}/${name}.yml"
+
+    if [[ -z $path ]]; then
+        error "Application file $path not found."
+    fi
+
+    color "$(kubectl apply -f "$path")"
 }
