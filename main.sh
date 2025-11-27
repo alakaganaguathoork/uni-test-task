@@ -85,6 +85,7 @@ case "$ACTION" in
         # application
         create_argocd_app spam 
         create_argocd_app vmstack
+        create_argocd_app argocd
 
         # debug
         print_stat

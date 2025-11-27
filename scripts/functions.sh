@@ -127,7 +127,7 @@ install_service_via_helm() {
     local repo=$3
     local release=$4
     local url=${5:-}
-    local values=$6
+    local values=${6:-}
 
     if is_release_installed "$namespace" "$name"; then
         color "$name release in $namespace namespace is already installed, skipping..."

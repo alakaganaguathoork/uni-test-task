@@ -1,4 +1,4 @@
-agrocd:
+argocd:
   global:
     domain: argocd.uni.local
 
@@ -27,7 +27,6 @@ agrocd:
       ingressClassName: nginx
       annotations:
           kubernetes.io/ingress.class: nginx
-          # nginx.ingress.kubernetes.io/ssl-passthrough: "true"
           nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
 
     readinessProbe:
