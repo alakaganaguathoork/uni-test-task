@@ -131,10 +131,26 @@ grafana:
       label: grafana_dashboard
       searchNamespace: ALL
   
+  dashboardProviders:
+    dashboardproviders.yaml:
+      apiVersion: 1
+      providers:
+        - name: 'uni'
+          orgId: 1
+          folder: 'Uni'
+          type: file
+          disableDeletion: false
+          editable: true
+          options:
+            path: /var/lib/grafana/dashboards/uni
+  
   dashboards:
     default:
       victoria-metrics-single:
         gnetId: 22084
+        datasource: victoriametric
+      node-exporter:
+        gnetId: 1860
         datasource: victoriametrics
 
   ingress:
