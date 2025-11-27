@@ -68,16 +68,19 @@ parse_args "$@"
 
 case "$ACTION" in
     install)
-        install_required_pkgs "${REQ_PKGS[*]}" "$OS"
-        install_tools "${TOOLS[*]}" "$OS" "$ARCH" "$K8S_VER"
-        start_cluster $PROFILE
-        install_service_via_helm "argocd" "argocd" "argo" "argo/argo-cd" "https://argoproj.github.io/argo-helm" "$DIR/values-files/argocd.yml"
+        # this block assures all required tools and services are installed before proceeding to applications
+        {
+            install_required_pkgs "${REQ_PKGS[*]}" "$OS"
+            install_tools "${TOOLS[*]}" "$OS" "$ARCH" "$K8S_VER"
+            start_cluster $PROFILE
+            install_service_via_helm "argocd" "argocd" "argo" "argo/argo-cd" "https://argoproj.github.io/argo-helm" "$DIR/values-files/argocd.yml"
+        }
 
-        # Apps
+        # application
         create_argocd_app spam 
         create_argocd_app vmstack
 
-        # Debug
+        # debug
         {
             color "OS: $OS"
             color "ARCH: $ARCH"
