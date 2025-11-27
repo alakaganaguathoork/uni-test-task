@@ -118,12 +118,18 @@ grafana:
     datasources.yaml:
       apiVersion: 1
       datasources:
-        - name: VictoriaMetrics
+        - name: victoriametrics
           type: victoriametrics-metrics-datasource
           url: http://vmstack-victoria-metrics-single-server:8428/select/0/prometheus
           access: proxy
           isDefault: true
           editable: true
+  
+  dashboards:
+    default:
+      victoria-metrics-single:
+        gnetId: 22084
+        datasource: victoriametrics
 
   ingress:
     enabled: true
