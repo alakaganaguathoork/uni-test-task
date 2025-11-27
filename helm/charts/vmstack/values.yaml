@@ -171,6 +171,9 @@ grafana:
       # spam2000:
         # file: dashboards/spam2000.json
         # datasource: victoriametrics
+      spam2000-test:
+        json: |
+          ${indent(14, file("./dashboard/spam2000.json"))}
       victoria-metrics-single:
         gnetId: 22084
         datasource: victoriametrics
