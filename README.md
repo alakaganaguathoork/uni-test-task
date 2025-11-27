@@ -62,7 +62,7 @@ Apps to be installed and synced in ArgoCD:
 
 ## Notes
 
-1. Running the `main.sh` in _VSCode terminal_ may lead to issues with file permissions. It is recommended to run the script in a standard terminal:
+1. :-1: Running the `main.sh` in _VSCode terminal_ may lead to issues with file permissions. It is recommended to run the script in a standard terminal:
 
     ```bash
     sudo: The "no new privileges" flag is set, which prevents sudo from running as root.
@@ -85,8 +85,8 @@ Apps to be installed and synced in ArgoCD:
 
 4. Few lables were dropped from `random_gauge_1` metric to make it less cardinal in job `spam` [./helm/charts/vmstack/values.yaml:37-39](./helm/charts/vmstack/values.yaml#L37-39)
 
-5. Didn't manage dashboards imported from Grafana Lab to work - they show no data.
+5. :-1: Didn't manage dashboards imported from Grafana Lab to work - they show no data.
 
-6. A custom dashboard for Spam2000 was added as plain json in values file [./helm/charts/vmstack/values.yaml:219-286](./helm/charts/vmstack/values.yaml#L219-286). I didn't manage to import it from a file (`helm/charts/vmstack/dashboard.json`).
+6. :-1: A custom dashboard for Spam2000 was added as plain json in values file [./helm/charts/vmstack/values.yaml:219-286](./helm/charts/vmstack/values.yaml#L219-286). I didn't manage to import it from a file (`helm/charts/vmstack/dashboard.json`).
 
     >It is possible to add a dashboard via ConfigMap as well as I know, but I wanted to keep it _GitOps-ish_.
