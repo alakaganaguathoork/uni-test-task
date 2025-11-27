@@ -59,6 +59,7 @@ TOOLS=(minikube kubectl helm)
 K8S_VER="1.34.0"
 PROFILE="uni"
 MK_ADDONS_LIST="ingress"
+APPS=("spam" "vmstack" "argocd")
 
 
 ###
@@ -68,25 +69,18 @@ parse_args "$@"
 
 case "$ACTION" in
     install)
-        # this block assures all required tools and services are installed before proceeding to applications
+        install_required_pkgs "${REQ_PKGS[*]}" "$OS"
+        install_tools "${TOOLS[*]}" "$OS" "$ARCH" "$K8S_VER"
+        start_cluster $PROFILE
+        bootstrap_argocd 
+
+        # applications
         {
-            install_required_pkgs "${REQ_PKGS[*]}" "$OS"
-            install_tools "${TOOLS[*]}" "$OS" "$ARCH" "$K8S_VER"
-            start_cluster $PROFILE
-            install_service_via_helm \
-                "argocd" \
-                "argocd" \
-                "argo" \
-                "argo/argo-cd" \
-                "https://argoproj.github.io/argo-helm"
-                # "$DIR/helm/argocd.yml"
+            for app in "${APPS[@]}"; do
+                create_argocd_app "$app" 
+            done
         }
-
-        # application
-        create_argocd_app spam 
-        create_argocd_app vmstack
-        create_argocd_app argocd
-
+        
         # debug
         print_stat
         color "Done creation."

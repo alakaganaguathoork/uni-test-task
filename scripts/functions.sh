@@ -126,8 +126,8 @@ install_service_via_helm() {
     local name=$2
     local repo=$3
     local release=$4
-    local url=${5:-}
-    local values=${6:-}
+    local url=$5
+    local values=$6
 
     if is_release_installed "$namespace" "$name"; then
         color "$name release in $namespace namespace is already installed, skipping..."
@@ -152,6 +152,17 @@ uninstall_service_via_helm() {
     local namespace=$1
     local release=$2
     helm uninstall -n "$namespace" "$release" || true
+}
+
+bootstrap_argocd() {
+    local namespace="argocd"
+    local name="argocd"
+    local repo="argo"
+    local release="argo/argo-cd"
+    local url="https://argoproj.github.io/argo-helm"
+    local values="$DIR/helm/argocd-bootstrap.yml"
+
+    install_service_via_helm $namespace $name $repo $release $url $values
 }
 
 create_argocd_app() {
