@@ -11,9 +11,9 @@ The `main.sh` will install few required packages (based on OS: Linux/potentially
 
 (minikube ran on docker driver in rootless, so no `sudo` is required for that)
 
-<span style="color: red; font-size: 22px; font-weight: 800;">! </span> Warning: `~/.kube/config` file won't be deleted on cluster deletion (it's commented out at [./scripts/resolve_tools.sh:166](./scripts/resolve_tools.sh#L166-L168))
+<span style="color: red; font-size: 22px; font-weight: 800;">! </span> Warning: `~/.kube/config` file won't be deleted on cluster deletion (it's commented out at [./scripts/resolve_tools.sh:166](./scripts/resolve_tools.sh#L166))
 
-<span style="color: red; font-size: 22px; font-weight: 800;">! </span> Warning: Installed tools won't be deleted on cluster deletion (it's commented out in [main.sh:104](./main.sh#L104-L106))
+<span style="color: red; font-size: 22px; font-weight: 800;">! </span> Warning: Installed tools won't be deleted on cluster deletion (it's commented out in [main.sh:104](./main.sh#L104))
 
 ---
 
@@ -47,6 +47,7 @@ Apps to be installed and synced in ArgoCD:
     sudo: If sudo is running in a container, you may need to adjust the container configuration to disable the flag.
     ```
 
-2. VictoriaMetrics doesn't have ingress as all metrics are pulled by Grafana from inside the cluster.
+2. `max_scrape_size` was increased in order to overcome too 'noisy' spam2000 app [./helm/charts/vmstack/values.yaml:37](./helm/charts/vmstack/values.yaml#L37)
+
 
 ja4nRJyqMcYlFJ7j

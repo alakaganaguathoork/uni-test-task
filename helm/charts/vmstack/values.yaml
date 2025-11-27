@@ -1,6 +1,8 @@
 victoria-metrics-single:
   server:
     retentionPeriod: 1d
+    extraArgs:
+      - --promscrape.maxScrapeSize=33554432
 
     ingress:
       enabled: true
@@ -32,6 +34,7 @@ victoria-metrics-single:
           - job_name: spam
             static_configs:
               - targets: [ "spam2000.app.svc:80" ]
+            max_scrape_size: 33554432   #turned out this app is too "noisy", so this is a hack to allow a target to live longer
                 
           - job_name: node
             static_configs:
