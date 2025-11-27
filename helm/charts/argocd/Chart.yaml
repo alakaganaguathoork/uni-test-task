@@ -1,0 +1,11 @@
+apiVersion: v2
+name: vmstack
+description: "Self-managed ArgoCD"
+type: application
+version: 0.1.0
+
+dependencies:
+  - name: argo-cd
+    version: 9.1.4
+    repository: https://argoproj.github.io/argo-helm
+    alias: argocd

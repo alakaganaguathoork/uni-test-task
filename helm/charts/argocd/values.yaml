@@ -1,0 +1,45 @@
+agrocd:
+  global:
+    domain: argocd.uni.local
+
+  configs:
+    params:
+      server:
+         insecure: true
+
+  projects:
+    enabled: true
+  
+  dex:
+    enabled: false
+
+  controller:
+    extraArgs:
+      - --application-namespaces
+      - "*"
+  server:
+    extraArgs:
+      - --insecure
+      - --application-namespaces
+      - "*"
+    ingress:
+      enabled: true
+      ingressClassName: nginx
+      annotations:
+          kubernetes.io/ingress.class: nginx
+          # nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+          nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+
+    readinessProbe:
+      initialDelaySeconds: 5
+      periodSeconds: 5
+      timeoutSeconds: 1
+      failureThreshold: 3
+      successThreshold: 1
+
+    livenessProbe:
+      initialDelaySeconds: 10
+      periodSeconds: 3
+      timeoutSeconds: 1
+      failureThreshold: 3
+      successThreshold: 1

@@ -78,8 +78,8 @@ case "$ACTION" in
                 "argocd" \
                 "argo" \
                 "argo/argo-cd" \
-                "https://argoproj.github.io/argo-helm" \
-                "$DIR/helm/argocd.yml"
+                "https://argoproj.github.io/argo-helm"
+                # "$DIR/helm/argocd.yml"
         }
 
         # application
