@@ -105,7 +105,8 @@ kube-state-metrics:
   replica: 1
   
 prometheus-node-exporter:
-  hostRootFsMount: true
+  hostRootFsMount: 
+    enabled: false
   
 grafana:
   adminPassword: grafana
