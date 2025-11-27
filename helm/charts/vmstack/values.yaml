@@ -4,11 +4,9 @@ victoria-metrics-single:
 
     ingress:
       enabled: true
-      ingressClassName: nginx #className: nginx
+      ingressClassName: nginx
       annotations:
         kubernetes.io/ingress.class: nginx
-        # nginx.ingress.kubernetes.io/ssl-passthrough: "true"
-        # nginx.ingress.kubernetes.io/rewrite-target: /
         nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
       hosts:
         - name: vm.mishap.local
@@ -38,10 +36,10 @@ victoria-metrics-agent:
       scrape_configs:
         - job_name: spam
           static_configs:
-            - targets: [ "spam2000:80" ]
+            - targets: [ "http://spam2000:80" ]
         - job_name: victoriametrics
           static_configs:
-            - targets: [ "localhost:8428" ]
+            - targets: [ "http://vmstack-prometheus-node-exporter:8428" ]
         - job_name: "kubernetes-apiservers"
           kubernetes_sd_configs:
             - role: endpoints
