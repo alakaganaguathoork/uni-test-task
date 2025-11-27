@@ -38,9 +38,9 @@ victoria-metrics-single:
             static_configs:
               - targets: [ "vmstack-prometheus-node-exporter.monitoring.svc:9100" ]
                 
-          - job_name: victoriametrics
-            static_configs:
-              - targets: [ "vmstack-victoria-metrics-single-server.monitoring.svc:8428" ]
+          # - job_name: victoriametrics
+            # static_configs:
+              # - targets: [ "vmstack-victoria-metrics-single-server.monitoring.svc:8428" ]
                 
           - job_name: "kubernetes-apiservers"
             kubernetes_sd_configs:
