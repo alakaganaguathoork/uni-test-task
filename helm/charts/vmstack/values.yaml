@@ -169,6 +169,10 @@ grafana:
       # spam2000:
         # file: dashboards/spam2000.json
         # datasource: victoriametrics
+      spam2000-curl:
+        url: https://github.com/alakaganaguathoork/uni-test-task/blob/main/helm/charts/vmstack/dashboards/spam2000.json
+        curlOptions: "-sLf"
+        token: ''
       victoria-metrics-single:
         gnetId: 22084
         datasource: victoriametrics
