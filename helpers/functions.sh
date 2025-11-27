@@ -33,14 +33,13 @@ edit_hosts_file() {
     case $action in
         add)
             if grep -Fxq "$record" /etc/hosts; then
-                echo "Exact line already present"
+                echo "Exact line already present" > /dev/null
             else
             color "Adding cluster hosts to the /etc/hosts file"
             sudo tee -a /etc/hosts <<EOF
 $record
 EOF
             fi
-
             ;;
         remove)
             if grep -Fxq "$record" /etc/hosts; then
