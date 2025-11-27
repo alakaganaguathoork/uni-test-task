@@ -47,7 +47,6 @@ Apps to be installed and synced in ArgoCD:
     sudo: If sudo is running in a container, you may need to adjust the container configuration to disable the flag.
     ```
 
-2. `max_scrape_size` was increased in order to overcome too 'noisy' spam2000 app [./helm/charts/vmstack/values.yaml:37](./helm/charts/vmstack/values.yaml#L37)
+2. `max_scrape_size` was increased in order to overcome too 'noisy' spam2000 app [./helm/charts/vmstack/values.yaml:35](./helm/charts/vmstack/values.yaml#L35)
 
-
-ja4nRJyqMcYlFJ7j
+3. Few lables were dropped from `` metric to make it less cardinal in job `spam` [./helm/charts/vmstack/values.yaml:37-39](./helm/charts/vmstack/values.yaml#L37-39)

@@ -166,14 +166,14 @@ grafana:
   
   dashboards:
     default:
+      spam-2000:
+        file: dashboards/spam2000.json
+        datasource: victoriametrics
       victoria-metrics-single:
         gnetId: 22084
         datasource: victoriametrics
       node-exporter:
         gnetId: 1860
-        datasource: victoriametrics
-      victoria-metrics-single-anotether:
-        gnetId: 10229
         datasource: victoriametrics
       resource-efficiency:
         gnetId: 24131
