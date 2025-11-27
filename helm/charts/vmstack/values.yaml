@@ -1,7 +1,6 @@
 victoria-metrics-single:
   retentionPeriod: 1d
 
-  server:
   scrape:
     enabled: true
     configMap: ""
@@ -89,7 +88,7 @@ victoria-metrics-single:
     # limits:
       # cpu: 200m
       # memory: 512Mi
-          
+server:       
   ingress:
     enabled: true
     annotations:
@@ -104,8 +103,10 @@ victoria-metrics-agent:
       - http://victoria-metrics-single:8428/api/v1/write
   
 kube-state-metrics:
+  replica: 1
   
 prometheus-node-exporter:
+  hostRootFsMount: true
   
 grafana:
   adminPassword: grafana

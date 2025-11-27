@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: vm-stack
+  name: vmstack
   namespace: argocd
   # finalizers:
     # - resources-finalizer.argocd.argoproj.io
