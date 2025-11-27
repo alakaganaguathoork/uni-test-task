@@ -22,7 +22,7 @@ victoria-metrics-single:
         # cpu: 200m
         # memory: 512Mi
   
-    scrape:
+  scrape:
     enabled: true
     configMap: ""
     config:
