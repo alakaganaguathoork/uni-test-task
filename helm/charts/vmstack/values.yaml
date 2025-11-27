@@ -32,7 +32,7 @@ victoria-metrics-single:
           - job_name: spam
             static_configs:
               - targets: [ "spam2000.app.svc:80" ]
-            max_scrape_size: 33554432   #turned out this app is too "noisy", so this is a hack to allow a target to live longer
+            max_scrape_size: 33554432   #turns out this app is too "noisy", so this is a hack to allow a target to live longer
             metric_relabel_configs:
               - source_labels: [random_gauge_1]
                 regex: "email|name|platform|products"
@@ -157,7 +157,7 @@ grafana:
       providers:
         - name: default
           orgId: 1
-          folder: 'uni'
+          folder: uni
           type: file
           disableDeletion: false
           editable: true
@@ -174,13 +174,13 @@ grafana:
         # datasource: victoriametrics
       victoria-metrics-single:
         gnetId: 22084
-        # datasource: victoriametrics
+        datasource: victoriametrics
       node-exporter:
         gnetId: 1860
-        # datasource: victoriametrics
+        datasource: victoriametrics
       resource-efficiency:
         gnetId: 24131
-        # datasource: victoriametrics
+        datasource: victoriametrics
       spam2000-from-json:
         json: |
           {
