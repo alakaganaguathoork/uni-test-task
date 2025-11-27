@@ -21,7 +21,7 @@ victoria-metrics-single:
     scrape:
       enabled: true
       configMap: ""
-      config: |
+      config:
         global:
           scrape_interval: 15s
         scrape_configs:
