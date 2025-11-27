@@ -166,7 +166,7 @@ grafana:
   
   dashboards:
     default:
-      spam-2000:
+      spam2000:
         file: dashboards/spam2000.json
         datasource: victoriametrics
       victoria-metrics-single:

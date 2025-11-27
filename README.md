@@ -2,20 +2,21 @@
 
 This is a test task project for Spam2000 app infrastucture setup. It aim is to test skills of a newcommer in DevOps field.
 
-The `main.sh` will install few required packages (based on OS: Linux/potentially, MacOS - I didn't have a device available to test, but required package/s installation has conditional logic for `os` and `arch` in [./scripts/general.sh](./scripts/general.sh)), tools and run services as ArgoCD applications.
+The `main.sh` will install/clean up few required packages (based on OS: Linux and MacOS.
+
+>MacOS - potentially: I didn't have a change to test, but required package/s installation has conditional logic for `os` and `arch` in [./scripts/general.sh](./scripts/general.sh)), tools and run services as ArgoCD applications
 
 ## Condiderations
 
 :warning: **Warning**: This scripts uses `sudo`:
 
-* to install required package/s and tools if they are not presented in a system;
-* to append hosts in `etc/hosts` file in order to access services via domain names locally.
+* to install/clean up required package/s and tools if they are not presented in a system;
+* to append/remove hosts in `etc/hosts` file in order to access services via domain names locally.
+* minikube was ran on docker driver in rootless mode
 
-(minikube ran on docker driver in rootless, so no `sudo` is required for that)
+:warning: **Warning**: `~/.kube/config` file won't be deleted on cluster deletion to not mess up your existing config (it's commented at [./scripts/resolve_tools.sh:166](./scripts/resolve_tools.sh#L166))
 
-:warning: **Warning**: `~/.kube/config` file won't be deleted on cluster deletion (it's commented at [./scripts/resolve_tools.sh:166](./scripts/resolve_tools.sh#L166))
-
-:warning: **Warning**: Installed tools won't be deleted on cluster deletion (it's commented in [main.sh:104](./main.sh#L104))
+:warning: **Warning**: Installed tools won't be deleted on cluster deletion in order to not mess up your env (it's commented in [main.sh:104](./main.sh#L104))
 
 ## Prerequisites
 

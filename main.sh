@@ -22,7 +22,7 @@ source "$DIR/scripts/resolve_tools.sh"
 parse_args() {
     while [[ "$#" -gt 0 ]]; do
         case "$1" in
-            --action|-a) 
+            --action) 
                 if [[ "$#" -ge 2 && -n "$2" && "$2" != -* ]]; then
                     ACTION="${2:-}"; 
                     shift 2
@@ -32,7 +32,7 @@ parse_args() {
                     error "You didn't pass the --action value."
                 fi
                 ;;
-            -h|--help)
+            --help)
                 help
                 ;;
             *)
