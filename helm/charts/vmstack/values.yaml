@@ -99,8 +99,7 @@ server:
 
 victoria-metrics-agent:
   remoteWrite:
-    urls:
-      - http://victoria-metrics-single:8428/api/v1/write
+    - url: http://victoria-metrics-single:8428/api/v1/write
   
 kube-state-metrics:
   replica: 1
