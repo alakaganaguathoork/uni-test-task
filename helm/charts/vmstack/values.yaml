@@ -32,7 +32,7 @@ victoria-metrics-single:
           - job_name: spam
             static_configs:
               - targets: [ "http://spam2000.app.svc:80" ]
-          - job_name: victoriametrics
+          - job_name: node-exporter
             static_configs:
               - targets: [ "http://vmstack-prometheus-node-exporter.monitoring.svc:9100" ]
           - job_name: victoriametrics
