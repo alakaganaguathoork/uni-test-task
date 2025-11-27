@@ -1,8 +1,6 @@
 victoria-metrics-single:
   server:
     retentionPeriod: 1d
-    # extraArgs:
-      # - --promscrape.maxScrapeSize=33554432
 
     ingress:
       enabled: true
@@ -38,7 +36,7 @@ victoria-metrics-single:
                 
           - job_name: node
             static_configs:
-              - targets: [ "vmstack-victoria-metrics-single-server.monitoring.svc:8428" ]
+              - targets: [ "vmstack-prometheus-node-exporter.monitoring.svc:9100" ]
                 
           - job_name: victoriametrics
             static_configs:
@@ -171,6 +169,9 @@ grafana:
         datasource: victoriametrics
       victoria-metrics-single-anotether:
         gnetId: 10229
+        datasource: victoriametrics
+      resource-efficiency:
+        gnetId: 24131
         datasource: victoriametrics
 
   ingress:
