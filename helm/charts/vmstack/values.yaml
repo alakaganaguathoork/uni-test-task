@@ -168,12 +168,13 @@ grafana:
   
   dashboards:
     default:
+      # this could be fixed with such proposal: https://community.grafana.com/t/how-to-upload-dashboards-as-json-files-to-kubernetes-via-helm/59731/2
       # spam2000:
         # file: dashboards/spam2000.json
         # datasource: victoriametrics
       spam2000-test:
         json: |
-          ${indent(14, file("./dashboard/spam2000.json"))}
+          ${indent(8, file("${path.module}/dashboard/spam2000.json"))}
       victoria-metrics-single:
         gnetId: 22084
         datasource: victoriametrics
