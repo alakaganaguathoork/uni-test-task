@@ -57,7 +57,7 @@ ARCH=$(get_arch)
 REQ_PKGS=(wget curl)
 TOOLS=(minikube kubectl helm)
 K8S_VER="1.34.0"
-PROFILE="minikube-mine"
+PROFILE="uni"
 MK_ADDONS_LIST="ingress,volumesnapshots"
 
 
