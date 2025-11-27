@@ -163,6 +163,9 @@ grafana:
       node-exporter:
         gnetId: 1860
         datasource: victoriametrics
+      kubernetes:
+        gnetId: 15661
+        datasource: victoriametrics
 
   ingress:
     enabled: true
