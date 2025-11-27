@@ -1,8 +1,8 @@
 victoria-metrics-single:
   server:
     retentionPeriod: 1d
-    extraArgs:
-      - --promscrape.maxScrapeSize=33554432
+    # extraArgs:
+      # - --promscrape.maxScrapeSize=33554432
 
     ingress:
       enabled: true
