@@ -18,6 +18,7 @@ is_cluster_existing() {
 is_release_installed() {
     local namespace=$1
     local release=$2
+
     helm status -n "$namespace" "$release" >/dev/null 2>&1
 }
 
@@ -64,21 +65,17 @@ get_cluster_ip() {
 
 get_argocd_password() {
     local com=""
-
-    while [[ -z "$com" ]]; do
-        color "Waiting for ArgoCD password..."
-        com="$(kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath='{.data.password}' 2>/dev/null | base64 -d || true)"
-        sleep 1
-    done
-
+    
+    com=$(kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath='{.data.password}' 2>/dev/null | base64 -d || true)
+    # echo "ArgoCD password: $com" >> $DIR/info.txt
     color "ArgoCD initial password: ${com}"
 }
 
 start_cluster() {
     local profile=${1:="minikube-test"}
     local driver=${2:-"kvm2"}
-    local memory="${3:-"6144"}"
-    local cpus="${4:-"4"}"
+    local memory="${3:-"4096"}"
+    local cpus="${4:-"2"}"
     local c_runtime=${3:-"docker"}
     local k8s_ver=${4:-"$K8S_VER"}
     local addons=${5:-"$MK_ADDONS_LIST"}
@@ -146,6 +143,8 @@ install_service_via_helm() {
             --reuse-values \
             --values "$values"
     fi
+
+    color "$name release was installed via helm"
 }
 
 uninstall_service_via_helm() {
@@ -162,7 +161,7 @@ create_argocd_app() {
     if [[ -z $path ]]; then
         error "Application file $path not found."
     else
-        color "Creating application from $path..."      
-        color "$(kubectl apply -f "$path")"
+        color "Doing the $name application from $path..."      
+        kubectl apply -f "$path"
     fi
 }

@@ -13,8 +13,8 @@ DIR=$(dirname $0)
 ###
 # HELPERS
 ###
-source "$DIR/helpers/general.sh"
-source "$DIR/helpers/resolve_tools.sh"
+source "$DIR/scripts/general.sh"
+source "$DIR/scripts/resolve_tools.sh"
 
 ###
 # PARSE ARGS
@@ -45,7 +45,7 @@ parse_args() {
 ###
 # Functions
 ###
-source "$DIR/helpers/functions.sh"
+source "$DIR/scripts/functions.sh"
 
 
 ###
@@ -54,7 +54,7 @@ source "$DIR/helpers/functions.sh"
 ACTION=""
 OS=$(get_os)
 ARCH=$(get_arch)
-REQ_PKGS=(wget curl)
+REQ_PKGS=(curl)
 TOOLS=(minikube kubectl helm)
 K8S_VER="1.34.0"
 PROFILE="uni"
@@ -73,7 +73,14 @@ case "$ACTION" in
             install_required_pkgs "${REQ_PKGS[*]}" "$OS"
             install_tools "${TOOLS[*]}" "$OS" "$ARCH" "$K8S_VER"
             start_cluster $PROFILE
-            install_service_via_helm "argocd" "argocd" "argo" "argo/argo-cd" "https://argoproj.github.io/argo-helm" "$DIR/values-files/argocd.yml"
+            install_service_via_helm \
+                "argocd" \
+                "argocd" \
+                "argo" \
+                "argo/argo-cd" \
+                "https://argoproj.github.io/argo-helm" \
+                "$DIR/helm/argocd.yml"
+            sleep 5
         }
 
         # application
@@ -87,15 +94,15 @@ case "$ACTION" in
             color "Kubernetes version: $K8S_VER"
             color "Required packages installed:\n${REQ_PKGS[*]}"
             color "Tools installed:\n${TOOLS[*]}"
-            sleep 5
+            minikube profile list
             get_argocd_password
         }
         color "Done creation."
         ;;
     destroy)
         delete_cluster $PROFILE
-        uninstall_tools "${TOOLS[*]}" "$OS"
-        uninstall_required_pkgs "${REQ_PKGS[*]}" "$OS"
+        # uninstall_tools "${TOOLS[*]}" "$OS"       uncomment in order to delete installed tools
+        # uninstall_required_pkgs "${REQ_PKGS[*]}" "$OS"    # as wget potentially was installed before, do not purge it from user's system
 
         # Debug
         {   
