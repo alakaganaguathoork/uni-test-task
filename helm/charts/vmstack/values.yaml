@@ -135,7 +135,7 @@ grafana:
       datasources:
         - name: victoriametrics
           type: prometheus
-          url: http://vmstack-victoria-metrics-single-server.monitoring.svc:8428/prometheus
+          url: http://vmstack-victoria-metrics-single-server.monitoring.svc:8428
           access: proxy
           isDefault: true
           editable: true
