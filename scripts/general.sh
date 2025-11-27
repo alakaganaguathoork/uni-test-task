@@ -68,3 +68,14 @@ get_arch() {
 
     echo $arch
 }
+
+print_stat() {
+    color "OS: $OS"
+    color "ARCH: $ARCH"
+    color "Kubernetes version: $K8S_VER"
+    color "Required packages installed:\n${REQ_PKGS[*]}"
+    color "Tools installed:\n${TOOLS[*]}"
+    minikube profile list
+    get_argocd_password
+    color "Ingresses:\n$(kubectl get ingress -A)"
+}

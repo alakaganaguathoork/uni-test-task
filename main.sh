@@ -80,7 +80,6 @@ case "$ACTION" in
                 "argo/argo-cd" \
                 "https://argoproj.github.io/argo-helm" \
                 "$DIR/helm/argocd.yml"
-            sleep 5
         }
 
         # application
@@ -88,15 +87,7 @@ case "$ACTION" in
         create_argocd_app vmstack
 
         # debug
-        {
-            color "OS: $OS"
-            color "ARCH: $ARCH"
-            color "Kubernetes version: $K8S_VER"
-            color "Required packages installed:\n${REQ_PKGS[*]}"
-            color "Tools installed:\n${TOOLS[*]}"
-            minikube profile list
-            get_argocd_password
-        }
+        print_stat
         color "Done creation."
         ;;
     destroy)
@@ -105,10 +96,8 @@ case "$ACTION" in
         # uninstall_required_pkgs "${REQ_PKGS[*]}" "$OS"    # as wget potentially was installed before, do not purge it from user's system
 
         # Debug
-        {   
-            color "These packages were NOT purged (to not break your system):\n${REQ_PKGS[*]}"
-            color "Tools deleted:\n${TOOLS[*]}"
-        }
+        color "These packages were NOT purged (to not break your system):\n${REQ_PKGS[*]}"
+        color "These tools were NOT deleted (commented out for now):\n${TOOLS[*]}"
         color "Done destruction."
         ;;
     *)
