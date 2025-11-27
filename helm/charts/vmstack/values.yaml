@@ -1,4 +1,6 @@
 victoria-metrics-single:
+  retentionPeriod: 1d
+
   server:
   scrape:
     enabled: true
@@ -80,11 +82,13 @@ victoria-metrics-single:
               regex: '^/system\.slice/(.+)\.service$'
               target_label: systemd_service_name
               replacement: '${1}'
-# spec:
-#   storage:
-#     resources:
-#       requests:
-#         storage: 2Gi
+# resources:
+    # requests:
+      # cpu: 50m
+      # memory: 256Mi
+    # limits:
+      # cpu: 200m
+      # memory: 512Mi
           
   ingress:
     enabled: true

@@ -1,6 +1,6 @@
 apiVersion: v2
-name: vm-observability
-description: "App of apps chart for VictoriaMetrics + Grafana + exporters (prometheus-node-exporter, kube-state-metrics)"
+name: vmstack
+description: "Umbrella app for VictoriaMetrics + Grafana + exporters (prometheus-node-exporter, kube-state-metrics)"
 type: application
 version: 0.1.0
 

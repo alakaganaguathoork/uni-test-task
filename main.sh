@@ -74,7 +74,8 @@ case "$ACTION" in
         install_service_via_helm "argocd" "argocd" "argo" "argo/argo-cd" "https://argoproj.github.io/argo-helm" "$DIR/values-files/argocd.yml"
 
         # Apps
-        create_argocd_app spam
+        create_argocd_app spam 
+        create_argocd_app vmstack
 
         # Debug
         {
@@ -86,6 +87,7 @@ case "$ACTION" in
             sleep 5
             get_argocd_password
         }
+        color "Done creation."
         ;;
     destroy)
         delete_cluster $PROFILE
@@ -93,15 +95,13 @@ case "$ACTION" in
         uninstall_required_pkgs "${REQ_PKGS[*]}" "$OS"
 
         # Debug
-        {
+        {   
             color "These packages were NOT purged (to not break your system):\n${REQ_PKGS[*]}"
             color "Tools deleted:\n${TOOLS[*]}"
         }
+        color "Done destruction."
         ;;
     *)
         error "Unknown action: $ACTION"
         ;;
 esac
-
-        # get_cluster_ip $PROFILE
-        # get_argocd_password
