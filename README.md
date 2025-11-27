@@ -87,6 +87,6 @@ Apps to be installed and synced in ArgoCD:
 
 5. :-1: Didn't manage dashboards imported from Grafana Lab to work - they show no data.
 
-6. :-1: A custom dashboard for Spam2000 was added as plain json in values file [./helm/charts/vmstack/values.yaml:183-534](./helm/charts/vmstack/values.yaml#L219-286). I didn't manage to import it from a file (`helm/charts/vmstack/dashboard.json`).
+6. :-1: A custom dashboard for Spam2000 was added as plain json in values file [./helm/charts/vmstack/values.yaml:183-534](./helm/charts/vmstack/values.yaml#L183-534). I didn't manage to import it from a file (`helm/charts/vmstack/dashboard.json`).
 
     >It is possible to add a dashboard via ConfigMap as well as I know, but I wanted to keep it _GitOps-ish_.
