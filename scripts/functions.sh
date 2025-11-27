@@ -136,6 +136,7 @@ install_service_via_helm() {
         helm repo add "$repo" "$url"
         helm repo update
     else
+        color "Installing $name release via helm..."
         helm upgrade \
             -n $namespace \
             --create-namespace \
@@ -144,7 +145,7 @@ install_service_via_helm() {
             --values "$values"
     fi
 
-    color "$name release was installed via helm"
+    color "$name release was installed via helm."
 }
 
 uninstall_service_via_helm() {
