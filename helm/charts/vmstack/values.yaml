@@ -125,6 +125,12 @@ grafana:
           isDefault: true
           editable: true
   
+  sidecar:
+    dashboards:
+      enabled: true
+      label: grafana_dashboard
+      searchNamespace: ALL
+  
   dashboards:
     default:
       victoria-metrics-single:
