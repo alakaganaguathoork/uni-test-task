@@ -126,6 +126,6 @@ grafana:
         pathType: Prefix
         backend:
           service:
-            name: grafana
+            name: vmstack-grafana
             port:
               number: 80
