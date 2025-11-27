@@ -73,9 +73,10 @@ print_stat() {
     color "OS: $OS"
     color "ARCH: $ARCH"
     color "Kubernetes version: $K8S_VER"
-    color "Required packages installed:\n${REQ_PKGS[*]}"
-    color "Tools installed:\n${TOOLS[*]}"
+    color "Required packages installed:"
+    echo "${REQ_PKGS[*]}"
+    color "Tools installed:"
+    echo "${TOOLS[*]}"
     minikube profile list
     get_argocd_password
-    color "Ingresses:\n$(kubectl get ingress -A)"
 }

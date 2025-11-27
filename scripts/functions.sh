@@ -73,7 +73,7 @@ get_argocd_password() {
 
 start_cluster() {
     local profile=${1:="minikube-test"}
-    local driver=${2:-"kvm2"}
+    local driver=${2:-"docker"}
     local memory="${3:-"4096"}"
     local cpus="${4:-"2"}"
     local c_runtime=${3:-"docker"}

@@ -58,7 +58,7 @@ REQ_PKGS=(curl)
 TOOLS=(minikube kubectl helm)
 K8S_VER="1.34.0"
 PROFILE="uni"
-MK_ADDONS_LIST="ingress,volumesnapshots"
+MK_ADDONS_LIST="ingress"
 
 
 ###
@@ -96,8 +96,10 @@ case "$ACTION" in
         # uninstall_required_pkgs "${REQ_PKGS[*]}" "$OS"    # as wget potentially was installed before, do not purge it from user's system
 
         # Debug
-        color "These packages were NOT purged (to not break your system):\n${REQ_PKGS[*]}"
-        color "These tools were NOT deleted (commented out for now):\n${TOOLS[*]}"
+        color "These packages were NOT purged (to not break your system):"
+        echo "${REQ_PKGS[*]}"
+        color "These tools were NOT deleted (commented out for now):"
+        echo "${TOOLS[*]}"
         color "Done destruction."
         ;;
     *)
