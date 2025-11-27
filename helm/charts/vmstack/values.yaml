@@ -115,8 +115,8 @@ grafana:
       apiVersion: 1
       datasources:
         - name: VictoriaMetrics
-          type: prometheus
-          url: http://vmstack-victoria-metrics-single-server:8428/select/0/prometheus/api/v1/series
+          type: victoriametrics-metrics-datasource
+          url: http://vmstack-victoria-metrics-single-server:8428/select/0/prometheus
           access: proxy
           isDefault: true
           editable: true
