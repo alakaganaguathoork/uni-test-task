@@ -29,7 +29,7 @@ is_release_installed() {
 edit_hosts_file() {
     local action=$1
     local minikube_ip="$2"
-    local record="$minikube_ip  argocd.mishap.local grafana.mishap.local spam2000.mishap.local vm.mishap.local"
+    local record="$minikube_ip  argocd.uni.local grafana.uni.local spam2000.uni.local vm.uni.local"
 
     case $action in
         add)
@@ -161,7 +161,8 @@ create_argocd_app() {
     if [[ -z $path ]]; then
         error "Application file $path not found."
     else
-        color "Doing the $name application from $path..."      
+        color "Doing the $name application from $path..."
+        sleep 5      # TDB: application didn't create correctly without a delay, needs to refactored to use some wait_for func 
         kubectl apply -f "$path"
     fi
 }

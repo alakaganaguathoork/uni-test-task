@@ -1,5 +1,5 @@
 global:
-  domain: argocd.mishap.local
+  domain: argocd.uni.local
 
 configs:
   params:
