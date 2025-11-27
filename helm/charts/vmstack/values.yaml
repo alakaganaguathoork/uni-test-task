@@ -11,16 +11,10 @@ victoria-metrics-single:
         # nginx.ingress.kubernetes.io/rewrite-target: /
         nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
       hosts:
-        - vm.mishap.local
-      path: /
-      extraPaths:
-        - path: /
-          pathType: Prefix
-          backend:
-            service:
-              name: vmstack-grafana
-              port:
-                number: 80
+        - name: vm.mishap.local
+          path: 
+            - /
+          port: http
     
     # resources:
       # requests:
