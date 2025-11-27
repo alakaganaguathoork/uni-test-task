@@ -6,16 +6,16 @@ The `main.sh` will install few required packages (based on OS: Linux/potentially
 
 ## Condiderations
 
-:warning: Warning: This scripts uses `sudo`:
+:warning: **Warning**: This scripts uses `sudo`:
 
 * to install required package/s and tools if they are not presented in a system;
 * to append hosts in `etc/hosts` file in order to access services via domain names locally.
 
 (minikube ran on docker driver in rootless, so no `sudo` is required for that)
 
-:warning: Warning: `~/.kube/config` file won't be deleted on cluster deletion (it's commented at [./scripts/resolve_tools.sh:166](./scripts/resolve_tools.sh#L166))
+:warning: **Warning**: `~/.kube/config` file won't be deleted on cluster deletion (it's commented at [./scripts/resolve_tools.sh:166](./scripts/resolve_tools.sh#L166))
 
-:warning: Warning: Installed tools won't be deleted on cluster deletion (it's commented in [main.sh:104](./main.sh#L104))
+:warning: **Warning**: Installed tools won't be deleted on cluster deletion (it's commented in [main.sh:104](./main.sh#L104))
 
 ## Prerequisites
 
