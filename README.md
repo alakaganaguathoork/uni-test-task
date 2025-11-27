@@ -84,3 +84,9 @@ Apps to be installed and synced in ArgoCD:
 3. `max_scrape_size` was increased in order to overcome too 'noisy' spam2000 app [./helm/charts/vmstack/values.yaml:35](./helm/charts/vmstack/values.yaml#L35)
 
 4. Few lables were dropped from `random_gauge_1` metric to make it less cardinal in job `spam` [./helm/charts/vmstack/values.yaml:37-39](./helm/charts/vmstack/values.yaml#L37-39)
+
+5. Didn't manage dashboards imported from Grafana Lab to work - they show no data.
+
+6. A custom dashboard for Spam2000 was added as plain json in values file [./helm/charts/vmstack/values.yaml:219-286](./helm/charts/vmstack/values.yaml#L219-286). I didn't manage to import it from a file (`helm/charts/vmstack/dashboard.json`).
+
+    >It is possible to add a dashboard via ConfigMap as well as I know, but I wanted to keep it _GitOps-ish_.
