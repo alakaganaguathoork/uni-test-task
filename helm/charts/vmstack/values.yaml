@@ -33,6 +33,9 @@ victoria-metrics-single:
             static_configs:
               - targets: [ "spam2000.app.svc:80" ]
             max_scrape_size: 33554432   #turned out this app is too "noisy", so this is a hack to allow a target to live longer
+            metric_relabel_configs:
+              - action: labeldrop
+                regex: "email|name"
                 
           - job_name: node
             static_configs:
