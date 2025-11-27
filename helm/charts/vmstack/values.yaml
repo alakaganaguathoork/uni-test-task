@@ -159,13 +159,16 @@ grafana:
     default:
       victoria-metrics-single:
         gnetId: 22084
-        datasource: victoriametrics
+        datasource: prometheus
       node-exporter:
         gnetId: 1860
-        datasource: victoriametrics
+        datasource: prometheus
       kubernetes:
         gnetId: 15661
-        datasource: victoriametrics
+        datasource: prometheus
+      victoria-metrics-single-anotether:
+        gnetId: 10229
+        datasource: prometheus
 
   ingress:
     enabled: true
