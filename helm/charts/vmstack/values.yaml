@@ -172,19 +172,15 @@ grafana:
       # spam2000:
         # file: dashboards/spam2000.json
         # datasource: victoriametrics
-      # this below didn't work
-      spam2000-test:
-        json: |
-          ${indent(8, file("${path.module}/dashboards/spam2000.json"))}
       victoria-metrics-single:
         gnetId: 22084
-        datasource: victoriametrics
+        # datasource: victoriametrics
       node-exporter:
         gnetId: 1860
-        datasource: victoriametrics
+        # datasource: victoriametrics
       resource-efficiency:
         gnetId: 24131
-        datasource: victoriametrics
+        # datasource: victoriametrics
       spam2000-from-json:
         json: |
           {
