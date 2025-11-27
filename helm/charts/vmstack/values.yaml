@@ -110,6 +110,10 @@ prometheus-node-exporter:
   
 grafana:
   adminPassword: grafana
+
+  plugins:
+    - victoriametrics-metrics-datasource
+
   datasources:
     datasources.yaml:
       apiVersion: 1
