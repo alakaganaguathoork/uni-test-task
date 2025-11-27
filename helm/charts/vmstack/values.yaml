@@ -51,7 +51,7 @@ victoria-metrics-single:
               regex: (.+)
               target_label: __metrics_path__
               replacement: /api/v1/nodes/$1/proxy/metrics
-              
+
         - job_name: "kubernetes-nodes-cadvisor"
           scheme: https
           tls_config:
@@ -142,14 +142,14 @@ grafana:
     dashboardproviders.yaml:
       apiVersion: 1
       providers:
-        - name: 'uni'
+        - name: default
           orgId: 1
-          folder: 'Uni'
+          folder: 'uni'
           type: file
           disableDeletion: false
           editable: true
           options:
-            path: /var/lib/grafana/dashboards/uni
+            path: /var/lib/grafana/dashboards/default
   
   dashboards:
     default:
