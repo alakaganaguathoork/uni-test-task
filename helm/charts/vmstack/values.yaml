@@ -34,7 +34,10 @@ victoria-metrics-single:
               - targets: [ "http://spam2000.app.svc:80" ]
           - job_name: victoriametrics
             static_configs:
-              - targets: [ "http://vmstack-prometheus-node-exporter.monitoring.svc:8428" ]
+              - targets: [ "http://vmstack-prometheus-node-exporter.monitoring.svc:9100" ]
+          - job_name: victoriametrics
+            static_configs:
+              - targets: [ "http://vmstack-victoria-metrics-single-server.monitoring.svc:8482" ]
           - job_name: "kubernetes-apiservers"
             kubernetes_sd_configs:
               - role: endpoints
