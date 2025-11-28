@@ -15,13 +15,6 @@ is_cluster_existing() {
     kubectl cluster-info >/dev/null 2>&1
 }
 
-is_release_installed() {
-    local namespace=$1
-    local release=$2
-
-    helm status -n "$namespace" "$release" >/dev/null 2>&1
-}
-
 
 ###
 # MINIKUBE
@@ -76,9 +69,9 @@ start_cluster() {
     local driver=${2:-"docker"}
     local memory="${3:-"4096"}"
     local cpus="${4:-"2"}"
-    local c_runtime=${3:-"docker"}
-    local k8s_ver=${4:-"$K8S_VER"}
-    local addons=${5:-"$MK_ADDONS_LIST"}
+    local c_runtime=${5:-"docker"}
+    local k8s_ver=${6:-"$K8S_VER"}
+    local addons=${7:-"$MK_ADDONS_LIST"}
     local cluster_ip=""
 
     if ! is_cluster_existing; then
@@ -121,6 +114,26 @@ delete_cluster() {
 ###
 # HELM
 ###
+is_release_installed() {
+    local namespace=$1
+    local name=$2
+
+    helm status -n "$namespace" "$name" >/dev/null 2>&1
+}
+
+add_helm_repo() {
+    local repo=$1
+    local url=$2
+
+    if ! helm repo list | grep "$repo" > /dev/null 2>&1; then
+        color "There is no $repo locally, adding from $url..."
+        helm repo add "$repo" "$url"
+        helm repo update
+    else
+        color "$repo helm repository exists locally, won't add again."
+    fi
+}
+
 install_service_via_helm() {
     local namespace=$1
     local name=$2
@@ -129,12 +142,10 @@ install_service_via_helm() {
     local url=$5
     local values=$6
 
+    add_helm_repo "$repo" "$url"
+
     if is_release_installed "$namespace" "$name"; then
         color "$name release in $namespace namespace is already installed, skipping..."
-    elif ! helm repo list | grep "$repo" > /dev/null 2>&1; then
-        color "There is no $repo locally, adding from $url..."
-        helm repo add "$repo" "$url"
-        helm repo update
     else
         color "Installing $name release via helm..."
         helm upgrade \
@@ -174,7 +185,7 @@ create_argocd_app() {
         error "Application file $path not found."
     else
         color "Doing the $name application from $path..."
-        sleep 2     # TDB: application didn't create correctly without a delay, needs to refactored to use some wait_for func 
+        # sleep 2     # TDB: application didn't create correctly without a delay, needs to refactored to use some wait_for func 
         kubectl apply -f "$path"
     fi
 }

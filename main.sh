@@ -91,7 +91,7 @@ case "$ACTION" in
         ;;
     destroy)
         delete_cluster $PROFILE
-        # uninstall_tools "${TOOLS[*]}" "$OS"       uncomment in order to delete installed tools
+        # uninstall_tools "${TOOLS[*]}" "$OS"       # uncomment in order to delete installed tools
         # uninstall_required_pkgs "${REQ_PKGS[*]}" "$OS"    # as curl potentially was installed before, do not purge it from user's system
 
         # Debug

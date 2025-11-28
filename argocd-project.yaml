@@ -26,14 +26,5 @@ spec:
     # - group: "*"
       # kind: "*"
 
-  # Optional: deny manual sync from UI for strong GitOps (only from Git)
-  # syncWindows:
-  #   - kind: deny
-  #     schedule: "* * * * *"
-  #     duration: 99999m
-  #     applications:
-  #       - "*"
-
-  # Optional: see stray stuff Argo isn't managing
   orphanedResources:
     warn: true
