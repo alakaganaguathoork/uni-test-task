@@ -60,6 +60,17 @@ Apps to be installed and synced in ArgoCD:
 * prometheus-node-exporter
 * grafana
 
+<table>
+    <tr>
+      <td>
+        <img src="./docs/argocd.png" width="100%">
+      </td>
+      <td>
+        <img src="./docs/vm-targets.png" width="100%">
+      </td>
+    </tr>
+</table>
+
 ## Notes
 
 1. :-1: Running the `main.sh` in _VSCode terminal_ may lead to issues with file permissions. It is recommended to run the script in a standard terminal:
@@ -85,8 +96,30 @@ Apps to be installed and synced in ArgoCD:
 
 4. Few lables were dropped from `random_gauge_1` metric to make it less cardinal in job `spam` [./helm/charts/vmstack/values.yaml:37-39](./helm/charts/vmstack/values.yaml#L37-39)
 
-5. :-1: Didn't manage dashboards imported from Grafana Lab to work - they show no data.
+5. :-1: Didn't manage dashboards imported from Grafana Lab to work - they show no data:
+
+    <table>
+        <tr>
+          <td>
+            <img src="./docs/kub-resources-dashboard.png" width="100%">
+          </td>
+          <td>
+            <img src="./docs/node-dashboard.png" width="100%">
+          </td>
+        </tr>
+    </table>
 
 6. :-1: A custom dashboard for Spam2000 was added as plain json in values file [./helm/charts/vmstack/values.yaml:183-534](./helm/charts/vmstack/values.yaml#L183-534). I didn't manage to import it from a file ([helm/charts/vmstack/dashboards/spam2000.json](helm/charts/vmstack/dashboards/spam2000.json)).
 
     >It is possible to add a dashboard via ConfigMap as well as I know, but I wanted to keep it _GitOps-ish_.
+
+    <table>
+        <tr>
+          <td>
+            <img src="./docs/custom-dashboard.png" width="100%">
+          </td>
+          <td>
+            <img src="./docs/spam.png" width="100%">
+          </td>
+        </tr>
+    </table>
