@@ -59,7 +59,7 @@ TOOLS=(minikube kubectl helm)
 K8S_VER="1.34.0"
 PROFILE="uni"
 MK_ADDONS_LIST="ingress"
-APPS=("spam" "vmstack" "argocd")
+# APPS=("spam" "vmstack" "argocd")
 
 
 ###
@@ -72,14 +72,16 @@ case "$ACTION" in
         install_required_pkgs "${REQ_PKGS[*]}" "$OS"
         install_tools "${TOOLS[*]}" "$OS" "$ARCH" "$K8S_VER"
         start_cluster $PROFILE
-        bootstrap_argocd "$DIR/helm/argocd-bootstrap.yml"
+        bootstrap_argocd "$DIR/argocd-bootstrap-values.yml"
 
-        # applications
-        {
-            for app in "${APPS[@]}"; do
-                create_argocd_app "$app" 
-            done
-        }
+        # separate applications
+        # {
+            # for app in "${APPS[@]}"; do
+                # create_argocd_app "$app" 
+            # done
+        # }
+        kubectl_apply "$DIR/argocd-project.yaml"
+        kubectl_apply "$DIR/argocd-apps-set.yaml"
         
         # debug
         print_stat

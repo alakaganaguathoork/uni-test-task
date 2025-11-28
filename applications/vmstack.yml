@@ -11,7 +11,7 @@ spec:
   project: default
   source:
     repoURL: https://github.com/alakaganaguathoork/uni-test-task.git
-    path: helm/charts/vmstack
+    path: charts/vmstack
     targetRevision: main
     helm:
       valueFiles:

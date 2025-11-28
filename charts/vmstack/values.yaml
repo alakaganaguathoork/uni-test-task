@@ -37,8 +37,6 @@ victoria-metrics-single:
               - source_labels: [random_gauge_1]
                 regex: "email|name|platform|products"
                 action: labeldrop
-                
-                
           - job_name: node
             static_configs:
               - targets: [ "vmstack-prometheus-node-exporter.monitoring.svc:9100" ]

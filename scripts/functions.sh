@@ -167,7 +167,7 @@ bootstrap_argocd() {
 
 create_argocd_app() {
     name=$1
-    app_folder="$DIR/helm/applications"
+    app_folder="$DIR/applications"
     path="${app_folder}/${name}.yml"
 
     if [[ -z $path ]]; then
@@ -177,4 +177,15 @@ create_argocd_app() {
         sleep 2     # TDB: application didn't create correctly without a delay, needs to refactored to use some wait_for func 
         kubectl apply -f "$path"
     fi
+}
+
+kubectl_apply() {
+    file=$1
+
+    if [[ -z $file ]]; then
+        error "Application file not found: $file"
+    else
+        color "Applying from $file..."
+        kubectl apply -f "$file"
+    fi   
 }
