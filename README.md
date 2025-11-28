@@ -18,7 +18,7 @@ The `main.sh` will install/clean up few required packages (based on OS: Linux an
 
 :warning: **Warning**: Installed tools won't be deleted on cluster deletion in order to not mess up your env (it's commented in [main.sh:93](./main.sh#L93))
 
-:warning: **Warning**: `vmstack` and `spam2000` applications are in `unknown` state up to 10min after start - couldn't beat it. But they work fine if sync manually.
+:warning: **Warning**: `vmstack` and `spam2000` applications are in `unknown` state up to 5min after start - couldn't beat it. But they work fine if sync manually. I assume its due to networking resources readiness state (not all network-related resources ready) after cluster creation.
 
 ## Prerequisites
 
