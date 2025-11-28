@@ -74,12 +74,14 @@ case "$ACTION" in
         start_cluster $PROFILE
         bootstrap_argocd "$DIR/argocd-bootstrap-values.yml"
 
-        # separate applications
+        # separate Application(s)
         # {
             # for app in "${APPS[@]}"; do
                 # create_argocd_app "$app" 
             # done
         # }
+
+        # Project + ApplicationSet
         kubectl_apply "$DIR/argocd-project.yaml"
         kubectl_apply "$DIR/argocd-apps-set.yaml"
         
