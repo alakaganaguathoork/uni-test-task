@@ -155,7 +155,7 @@ uninstall_service_via_helm() {
 }
 
 bootstrap_argocd() {
-    local values=${1:-"$DIR/helm/argocd-bootstrap.yml"}
+    local values=${1:-"$DIR/argocd-bootstrap.yml"}
     local namespace="argocd"
     local name="argocd"
     local repo="argo"

@@ -16,7 +16,7 @@ The `main.sh` will install/clean up few required packages (based on OS: Linux an
 
 :warning: **Warning**: `~/.kube/config` file won't be deleted on cluster deletion to not mess up your existing config (it's commented at [./scripts/resolve_tools.sh:166](./scripts/resolve_tools.sh#L166))
 
-:warning: **Warning**: Installed tools won't be deleted on cluster deletion in order to not mess up your env (it's commented in [main.sh:95](./main.sh#L95))
+:warning: **Warning**: Installed tools won't be deleted on cluster deletion in order to not mess up your env (it's commented in [main.sh:93](./main.sh#L93))
 
 ## Prerequisites
 
@@ -92,9 +92,9 @@ Apps to be installed and synced in ArgoCD:
     --addons="ingress"
     ```
 
-3. `max_scrape_size` was increased in order to overcome too 'noisy' spam2000 app [./helm/charts/vmstack/values.yaml:35](./helm/charts/vmstack/values.yaml#L35)
+3. `max_scrape_size` was increased in order to overcome too 'noisy' spam2000 app [./charts/vmstack/values.yaml:35](./charts/vmstack/values.yaml#L35)
 
-4. Few lables were dropped from `random_gauge_1` metric to make it less cardinal in job `spam` [./helm/charts/vmstack/values.yaml:37-39](./helm/charts/vmstack/values.yaml#L37-39)
+4. Few lables were dropped from `random_gauge_1` metric to make it less cardinal in job `spam` [./charts/vmstack/values.yaml:36-39](./charts/vmstack/values.yaml#L36-39)
 
 5. :-1: Didn't manage dashboards imported from Grafana Lab to work - they show no data:
 
@@ -109,7 +109,7 @@ Apps to be installed and synced in ArgoCD:
         </tr>
     </table>
 
-6. :-1: A custom dashboard for Spam2000 was added as plain json in values file [./helm/charts/vmstack/values.yaml:183-534](./helm/charts/vmstack/values.yaml#L183-534). I didn't manage to import it from a file ([helm/charts/vmstack/dashboards/spam2000.json](helm/charts/vmstack/dashboards/spam2000.json)).
+6. :-1: A custom dashboard for Spam2000 was added as plain json in values file [./charts/vmstack/values.yaml:183-534](./charts/vmstack/values.yaml#L183-534). I didn't manage to import it from a file ([./charts/vmstack/dashboards/spam2000.json](./charts/vmstack/dashboards/spam2000.json)).
 
     >It is possible to add a dashboard via ConfigMap as well as I know, but I wanted to keep it _GitOps-ish_.
 
