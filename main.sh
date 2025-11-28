@@ -72,7 +72,7 @@ case "$ACTION" in
         install_required_pkgs "${REQ_PKGS[*]}" "$OS"
         install_tools "${TOOLS[*]}" "$OS" "$ARCH" "$K8S_VER"
         start_cluster $PROFILE
-        bootstrap_argocd 
+        bootstrap_argocd "$DIR/helm/argocd-bootstrap.yml"
 
         # applications
         {

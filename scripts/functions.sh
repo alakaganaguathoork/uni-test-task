@@ -155,12 +155,12 @@ uninstall_service_via_helm() {
 }
 
 bootstrap_argocd() {
+    local values=${1:-"$DIR/helm/argocd-bootstrap.yml"}
     local namespace="argocd"
     local name="argocd"
     local repo="argo"
     local release="argo/argo-cd"
     local url="https://argoproj.github.io/argo-helm"
-    local values="$DIR/helm/argocd-bootstrap.yml"
 
     install_service_via_helm $namespace $name $repo $release $url $values
 }
