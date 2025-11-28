@@ -2,9 +2,9 @@
 
 This is a test task project for Spam2000 app infrastucture setup. It aim is to test skills of a newcommer in DevOps field.
 
-The `main.sh` will install/clean up few required packages (based on OS: Linux and MacOS.
+The `main.sh` will install/clean up few required packages (based on OS: Linux/MacOS) and tools, and run services as ArgoCD applications.
 
->MacOS - potentially: I didn't have a chance to test, but required package/s installation has conditional logic for `os` and `arch` in [./scripts/general.sh](./scripts/general.sh)), tools and run services as ArgoCD applications
+>MacOS - potentially: I didn't have a chance to test, but required package/s installation has conditional logic for `os` and `arch` in [./scripts/general.sh](./scripts/general.sh)
 
 ## Condiderations
 
@@ -16,7 +16,7 @@ The `main.sh` will install/clean up few required packages (based on OS: Linux an
 
 :warning: **Warning**: `~/.kube/config` file won't be deleted on cluster deletion to not mess up your existing config (it's commented at [./scripts/resolve_tools.sh:166](./scripts/resolve_tools.sh#L166))
 
-:warning: **Warning**: Installed tools won't be deleted on cluster deletion in order to not mess up your env (it's commented in [main.sh:93](./main.sh#L93))
+:warning: **Warning**: Installed tools won't be deleted on cluster deletion in order to not mess up your env (it's commented in [main.sh:94](./main.sh#L94))
 
 ## Prerequisites
 
@@ -80,7 +80,7 @@ Apps to be installed and synced in ArgoCD:
     sudo: If sudo is running in a container, you may need to adjust the container configuration to disable the flag.
     ```
 
-2. Cluster will be created with such params in [./scripts/functions.sh:L85-92](./scripts/functions.sh#L85-92):
+2. Cluster will be created with such params in [./scripts/functions.sh:L78-85](./scripts/functions.sh#L78-85):
 
     ```bash
     --profile="uni" \
