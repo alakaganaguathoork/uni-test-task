@@ -174,7 +174,7 @@ create_argocd_app() {
         error "Application file $path not found."
     else
         color "Doing the $name application from $path..."
-        # sleep 2     # TDB: application didn't create correctly without a delay, needs to refactored to use some wait_for func 
+        sleep 2     # TDB: application didn't create correctly without a delay, needs to refactored to use some wait_for func 
         kubectl apply -f "$path"
     fi
 }
