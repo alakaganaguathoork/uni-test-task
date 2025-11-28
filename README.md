@@ -18,8 +18,6 @@ The `main.sh` will install/clean up few required packages (based on OS: Linux an
 
 :warning: **Warning**: Installed tools won't be deleted on cluster deletion in order to not mess up your env (it's commented in [main.sh:93](./main.sh#L93))
 
-:warning: **Warning**: `vmstack` and `spam2000` applications are in `unknown` state up to 5min after start - couldn't beat it. But they work fine if sync manually. I assume its due to networking resources readiness state (not all network-related resources ready) after cluster creation.
-
 ## Prerequisites
 
 * Docker installed on your machine - as it's used as a container runtime for minikube.
@@ -94,11 +92,13 @@ Apps to be installed and synced in ArgoCD:
     --addons="ingress"
     ```
 
-3. `max_scrape_size` was increased in order to overcome too 'noisy' spam2000 app [./charts/vmstack/values.yaml:35](./charts/vmstack/values.yaml#L35)
+3. `vmstack` and `spam2000` applications are in `unknown` state for up to 3-5 min after start - reconcilation happens every 3 min by default. Though, they work fine if sync manually. I assume its due to networking resources readiness state (not all network-related resources ready) after cluster creation.
 
-4. Few lables were dropped from `random_gauge_1` metric to make it less cardinal in job `spam` [./charts/vmstack/values.yaml:36-39](./charts/vmstack/values.yaml#L36-39)
+4. `max_scrape_size` was increased in order to overcome too 'noisy' spam2000 app [./charts/vmstack/values.yaml:35](./charts/vmstack/values.yaml#L35)
 
-5. :-1: Didn't manage dashboards imported from Grafana Lab to work - they show no data:
+5. Few lables were dropped from `random_gauge_1` metric to make it less cardinal in job `spam` [./charts/vmstack/values.yaml:36-39](./charts/vmstack/values.yaml#L36-39)
+
+6. :-1: Didn't manage dashboards imported from Grafana Lab to work - they show no data:
 
     <table>
         <tr>
@@ -111,7 +111,7 @@ Apps to be installed and synced in ArgoCD:
         </tr>
     </table>
 
-6. :-1: A custom dashboard for Spam2000 was added as plain json in values file [./charts/vmstack/values.yaml:183-534](./charts/vmstack/values.yaml#L183-534). I didn't manage to import it from a file ([./charts/vmstack/dashboards/spam2000.json](./charts/vmstack/dashboards/spam2000.json)).
+7. :-1: A custom dashboard for Spam2000 was added as plain json in values file [./charts/vmstack/values.yaml:183-534](./charts/vmstack/values.yaml#L183-534). I didn't manage to import it from a file ([./charts/vmstack/dashboards/spam2000.json](./charts/vmstack/dashboards/spam2000.json)).
 
     >It is possible to add a dashboard via ConfigMap as well as I know, but I wanted to keep it _GitOps-ish_.
 
