@@ -1,24 +1,24 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: spam2000
+  name: ${name}
   namespace: argocd
   # https://github.com/argoproj/argo-cd/issues/21035#issuecomment-2828348695
   finalizers:
     # - resources-finalizer.argocd.argoproj.io
     - resources-finalizer.argocd.argoproj.io/foreground
 spec:
-  project: default
+  project: ${project}
   source:
     repoURL: https://github.com/alakaganaguathoork/uni-test-task.git
-    path: charts/spam2000
-    targetRevision: main
+    targetRevision: main-terra
+    path: charts/${name}
     helm:
       valueFiles:
         - values.yaml
   destination:
     server: https://kubernetes.default.svc
-    namespace: app
+    namespace: ${namespace}
   syncPolicy:
     automated:
       prune: true

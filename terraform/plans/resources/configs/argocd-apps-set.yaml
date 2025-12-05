@@ -7,9 +7,9 @@ spec:
   generators:
     - list:
         elements:
-          - name: argocd
-            path: charts/argocd
-            namespace: argocd
+          # - name: argocd
+            # path: charts/argocd
+            # namespace: argocd
           - name: vmstack
             path: charts/vmstack
             namespace: monitoring
@@ -23,7 +23,7 @@ spec:
       finalizers:
         - resources-finalizer.argocd.argoproj.io/foreground
     spec:
-      project: uni
+      project: 'uni'
       source:
         repoURL: https://github.com/alakaganaguathoork/uni-test-task.git
         targetRevision: HEAD

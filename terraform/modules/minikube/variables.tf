@@ -34,7 +34,7 @@ variable "disk_size" {
 }
 
 variable "addons" {
-    type = list(string)
-    description = "List of addons to be installed. Defaults to none."
-    default = []
+  type        = list(string)
+  description = "List of addons to be installed. Defaults to none."
+  default     = []
 }
