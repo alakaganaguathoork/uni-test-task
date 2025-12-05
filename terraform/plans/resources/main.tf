@@ -10,7 +10,7 @@ module "argocd_project" {
 
 module "argocd_resources" {
   for_each = local.kube_resources.apps
-  source = "../../modules/kubernetes"
+  source   = "../../modules/kubernetes"
 
   manifest = each.value
 

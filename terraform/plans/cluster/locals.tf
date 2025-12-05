@@ -3,7 +3,11 @@ locals {
     name      = "uni"
     static_ip = "192.168.0.198"
     cpus      = "max"
-    addons    = ["ingress"]
+    addons = [
+      "storage-provisioner",
+      "default-storageclass",
+      "ingress"
+    ]
   }
 
   argocd_helm_release = {

@@ -20,7 +20,7 @@ locals {
   }
 
   kube_resources = {
-    project  = file("./configs/argocd-project.yaml")
+    project = file("./configs/argocd-project.yaml")
     # ApplicationSet didn't work via terraform's kubernetes provider due to the error: "The plugin.(*GRPCProvider).PlanResourceChange request was cancelled." 
     # apps_set = "./configs/argocd-apps-set.yaml"
     apps = {

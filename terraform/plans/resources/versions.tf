@@ -11,5 +11,5 @@ provider "kubernetes" {
   alias = "root"
 
   config_context = local.cluster_name
-  config_path = "~/.kube/config"
+  config_path    = "~/.kube/config"
 }

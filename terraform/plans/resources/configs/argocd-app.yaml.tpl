@@ -4,9 +4,10 @@ metadata:
   name: ${name}
   namespace: argocd
   # https://github.com/argoproj/argo-cd/issues/21035#issuecomment-2828348695
-  finalizers:
+  # finalizers:
     # - resources-finalizer.argocd.argoproj.io
-    - resources-finalizer.argocd.argoproj.io/foreground
+    # Skip for local setup - it prevents terraform to destroy apps
+    # - resources-finalizer.argocd.argoproj.io/foreground
 spec:
   project: ${project}
   source:

@@ -6,7 +6,7 @@ DIR=$(dirname $0)
 
 ###
 # This script automates installation of required tools and starts a local kubernetes with minikube. 
-# Usage: main.sh --action <install|uninstall>
+# Usage: main.sh --action <install|destroy>
 ###
 
 
@@ -55,12 +55,10 @@ ACTION=""
 OS=$(get_os)
 ARCH=$(get_arch)
 REQ_PKGS=(curl)
-TOOLS=(minikube kubectl helm)
 K8S_VER="1.34.0"
 PROFILE="uni"
-MK_ADDONS_LIST="ingress"
-# APPS=("spam" "vmstack" "argocd")
-
+TOOLS=(minikube kubectl helm)
+TF_PLANS=(cluster resources)
 
 ###
 # MAIN LOGIC
@@ -71,26 +69,16 @@ case "$ACTION" in
     install)
         install_required_pkgs "${REQ_PKGS[*]}" "$OS"
         install_tools "${TOOLS[*]}" "$OS" "$ARCH" "$K8S_VER"
-        start_cluster $PROFILE
-        bootstrap_argocd "$DIR/argocd-bootstrap-values.yml"
-
-        # separate Application(s)
-        # {
-            # for app in "${APPS[@]}"; do
-                # create_argocd_app "$app" 
-            # done
-        # }
-
-        # Project + ApplicationSet
-        kubectl_apply "$DIR/argocd-project.yaml"
-        kubectl_apply "$DIR/argocd-apps-set.yaml"
-        
-        # debug
+        tf_apply "${TF_PLANS[*]}"
+        edit_hosts_file "add" "$(get_cluster_ip "$PROFILE")"
+        get_argocd_password
         print_stat
+        
         color "Done creation."
         ;;
     destroy)
-        delete_cluster $PROFILE
+        tf_destroy "${TF_PLANS[*]}" "$OS"
+        edit_hosts_file "remove" "$(get_cluster_ip "$PROFILE")"
         # uninstall_tools "${TOOLS[*]}" "$OS"       # uncomment in order to delete installed tools
         # uninstall_required_pkgs "${REQ_PKGS[*]}" "$OS"    # as curl potentially was installed before, do not purge it from user's system
 
